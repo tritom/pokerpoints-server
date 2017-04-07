@@ -1,0 +1,33 @@
+{
+  "name": "voting-server",
+  "version": "0.0.0",
+  "description": "Voting Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node index.js",
+    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js  --recursive",
+    "test:watch": "npm run test -- --watch"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "author": "Tommy Trinh",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "babel-cli": "~6.9.0",
+    "babel-core": "~6.9.1",
+    "babel-preset-es2015": "~6.9.0",
+    "chai": "~3.5.0",
+    "chai-immutable": "~1.5.4",
+    "mocha": "~2.5.3",
+    "sinon": "^2.1.0"
+  },
+  "dependencies": {
+    "immutable": "~3.8.1",
+    "node-uuid": "^1.4.8",
+    "redux": "~3.6.0",
+    "socket.io": "~1.4.8"
+  }
+}
