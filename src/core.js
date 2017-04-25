@@ -1,23 +1,24 @@
-import {List, Map, fromJS} from 'immutable';
-import uuid from 'node-uuid';
-import {pointScheme} from './point_scheme';
-import {stage} from './stage';
+import {List, Map, fromJS} from 'immutable'
+import uuid from 'node-uuid'
+import {pointScheme} from './point_scheme'
+import {stage} from './stage'
 
-export const INITIAL_STATE = Map();
+export const INITIAL_STATE = Map()
 
 export function createSession(state) {
   return state.remove('votingRound')
               .set('sessionId', uuid.v1())
               .set('stage', stage.preVoteOptions)
-              .set('pointScheme', pointScheme.fibonacci)
-              .set('users', List.of());
+              .set('pointScheme', fromJS(pointScheme.fibonacci))
+              .set('users', List.of())
 }
 
 export function joinSession(state, user) {
   const users = state.get('users')
+  const newUser = fromJS(user)
 
-  if(users && !isUserInSession(users, user)) {
-    const newUsers = users.push(Map(user))
+  if(users && !isUserInSession(users, newUser)) {
+    const newUsers = users.push(newUser)
     return state.merge({users: newUsers})
   }
   return state
@@ -58,20 +59,19 @@ export function vote(state, ballot) {
     return state
   }
 
-  const user = ballot.user
-  const point = ballot.point
+  const user = fromJS(ballot.user)
+  const point = fromJS(ballot.point)
   
   if(!state.get('pointScheme').contains(point) || 
      !isUserInSession(state.get('users'), user)) {
     return state
   } 
 
-  let nextState = state.updateIn(['votingRound', 'votes'], map => map.set(user.name, point))
+  let nextState = state.updateIn(['votingRound', 'votes'], map => map.set(user.get('name'), point))
 
   if(votesComplete(nextState)){
     nextState = endVote(nextState)
   }
-  
   return nextState
 }
 
@@ -91,6 +91,6 @@ function votesComplete(state) {
 }
 
 function isUserInSession(users, user) {
-  return users.find((u) => u.get('name') === user.name)
+  return users.find((u) => u.get('name') === user.get('name'))
 }
 

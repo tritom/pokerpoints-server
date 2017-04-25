@@ -1,7 +1,5 @@
-import {fromJS} from 'immutable';
-
 export const pointScheme = {
-  fibonacci: fromJS([
+  fibonacci: [
     { label: '1', value: 1},
     { label: '2', value: 2},
     { label: '3', value: 3},
@@ -10,5 +8,5 @@ export const pointScheme = {
     { label: '13', value: 13},
     { label: '21', value: 21},
     { label: '34', value: 34}
-  ])
+  ]
 };

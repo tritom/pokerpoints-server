@@ -7,6 +7,7 @@ import uuid from 'node-uuid'
 import sinon from 'sinon'
 
 describe('application logic', () => {
+  const points = fromJS(pointScheme.fibonacci)
   const users = [
     {'name' : 'Bob', 'role': 'voter'}, 
     {'name' : 'Tom', 'role': 'voter'}, 
@@ -29,7 +30,7 @@ describe('application logic', () => {
       expect(nextState).to.equal(Map({
         sessionId: 'NEW_SESSION_ID', 
         stage: stage.preVoteOptions,
-        pointScheme: pointScheme.fibonacci,
+        pointScheme: points,
         users: List.of()
       }))
     })
@@ -37,7 +38,7 @@ describe('application logic', () => {
     it('returns resets existing session with initial state', () => {
       const state = fromJS({ sessionId: 'OLD_SESSION_ID', 
         stage: stage.VoteSummary,
-        pointScheme: pointScheme.fibonacci,
+        pointScheme: points,
         users: users,
         votingRound: {votes: {}, observers:[]}
       })
@@ -47,7 +48,7 @@ describe('application logic', () => {
       expect(nextState).to.equal(Map({
         sessionId: 'NEW_SESSION_ID', 
         stage: stage.preVoteOptions,
-        pointScheme: pointScheme.fibonacci,
+        pointScheme: points,
         users: List.of()
       }))
     })
@@ -57,7 +58,7 @@ describe('application logic', () => {
     let state = fromJS({
         sessionId: 'NEW_SESSION_ID', 
         stage: stage.preVoteOptions,
-        pointScheme: pointScheme.fibonacci,
+        pointScheme: points,
         users: [] 
     })
     const user = users[0]
@@ -83,7 +84,7 @@ describe('application logic', () => {
     let state = fromJS({
         sessionId: 'NEW_SESSION_ID', 
         stage: stage.preVoteOptions,
-        pointScheme: pointScheme.fibonacci,
+        pointScheme: points,
         users: [users[0]] 
     })
     
@@ -127,7 +128,6 @@ describe('application logic', () => {
   })
 
   describe('endVote', () => {
-    const points = pointScheme.fibonacci
     let votes = {}
     votes[users[0].name] = points.get(0)
     votes[users[1].name] = points.get(0)
@@ -169,12 +169,11 @@ describe('application logic', () => {
   describe('vote', () => {
     const testUsers = users.slice(0,2)
     const userName = testUsers[0].name
-    const points = pointScheme.fibonacci
     const ballot = {'user' : {'name': userName}, 'point' : points.get(0)}
     let state = fromJS({
         sessionId: 'NEW_SESSION_ID', 
         stage: stage.voteInProgress,
-        pointScheme: pointScheme.fibonacci,
+        pointScheme: points,
         users: testUsers,
         votingRound: {
           votes: {}

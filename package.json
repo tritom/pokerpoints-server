@@ -1,7 +1,7 @@
 {
-  "name": "voting-server",
+  "name": "pokerpoints-server",
   "version": "0.0.0",
-  "description": "Voting Server",
+  "description": "PokerPoints Server",
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
@@ -16,15 +16,17 @@
   "author": "Tommy Trinh",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "babel-cli": "~6.9.0",
+    "babel-cli": "^6.9.0",
     "babel-core": "~6.9.1",
-    "babel-preset-es2015": "~6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-2": "^6.24.1",
     "chai": "~3.5.0",
     "chai-immutable": "~1.5.4",
     "mocha": "~2.5.3",
     "sinon": "^2.1.0"
   },
   "dependencies": {
+    "express": "^4.15.2",
     "immutable": "~3.8.1",
     "node-uuid": "^1.4.8",
     "redux": "~3.6.0",
